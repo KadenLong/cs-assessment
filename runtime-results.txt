@@ -1,0 +1,11 @@
+ARRAY               | doublerAppend                | doublerInsert  
+--------------------------------------------------------------------
+tinyArray           | 74us                         | 35.4us
+smallArray          | 84.8us                       | 50us
+mediumArray         | 137.3us                      | 192.8us
+largeArray          | 674.8us                      | 8.9285ms
+extraLargeArray     | 3.1809ms                     | 880.8008ms
+
+I took the time to plot all of these points on a graph so I could see the shape. At first glance I thought that both lines had a quadratic shape, but then I took into consideration that we are working with only 5 points that grow intensly. After it was easy to that the doublerAppend has a time complexity of O(n), while the doublerInsert has a time complexity of O(n^2). The jumps in time as the arrays hit their larget sets are vastly differnt. doublerAppend scales significantly better, taking up only a tiny fraction of the time that doublerInsert does in the higher ranges.
+
+doublerInsert is much slower due to the process that ".unshift" does behind the scense. Unlike ".push", which just tacks onto the end of the array, not touching the memory locaiton of the rest of the items in the array, ".unshift" inserts at the very beginning of the array. This creates need to reallocate all the memory location of every other item in the array, one by one. 
